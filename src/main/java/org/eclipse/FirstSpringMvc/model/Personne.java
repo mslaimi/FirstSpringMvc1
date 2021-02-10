@@ -6,16 +6,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "personnes")
 public class Personne implements Serializable {
 	@Id
 	@GeneratedValue
-	private Long num;
+	private int num;
+	@Size(min = 2)
+	@NotEmpty(message ="le nom doit etre saisi")
 	private String nom;
+	@Size(min = 2)
+	@NotEmpty(message ="le prenom doit etre saisi")
 	private String prenom;
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 
 	public Personne() {
 	}
@@ -25,13 +31,6 @@ public class Personne implements Serializable {
 		this.prenom = prenom;
 	}
 
-	public Long getNum() {
-		return num;
-	}
-
-	public void setNum(Long num) {
-		this.num = num;
-	}
 
 	public String getNom() {
 		return nom;
@@ -48,4 +47,19 @@ public class Personne implements Serializable {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	@Override
+	public String toString() {
+		return "Personne [num=" + num + ", nom=" + nom + ", prenom=" + prenom + "]";
+	}
+	
+	
 }

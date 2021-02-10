@@ -12,13 +12,16 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+@EnableWebMvc
 @Configuration
 @ComponentScan("org.eclipse.FirstSpringMvc.controller")
 @EnableJpaRepositories("org.eclipse.FirstSpringMvc.dao")
 public class ApplicationConfig {
+
 	@Bean
 	public InternalResourceViewResolver setup() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -31,7 +34,7 @@ public class ApplicationConfig {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/mybase");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/mybase?useSSL=false");
 		dataSource.setUsername("root");
 		dataSource.setPassword("root");
 		return dataSource;
