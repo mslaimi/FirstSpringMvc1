@@ -11,7 +11,4 @@ public interface PersonneRepository extends JpaRepository<Personne, Long> {
 
 	@Query("select p from Personne p where p.nom = ?1")
 	Personne findByNom(String nom);
-
-	//@Query("select p from Personne p where p.num = ?1")
-	Personne findByNum(int num);
 }

@@ -11,11 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
-@SessionAttributes("perso")
 public class ConnectionController {
 	@Autowired
 	private PersonneRepository personneRepository;
@@ -23,7 +21,7 @@ public class ConnectionController {
 	@GetMapping("/connect")
 	public String personneForm(Model model) {
 		model.addAttribute("perso", new Personne());
-		return "connectForm";
+		return "jsp/connectForm";
 	}
 
 	@PostMapping("/connect")
@@ -31,13 +29,15 @@ public class ConnectionController {
 			WebRequest request) {
 		List<Personne> personnes = personneRepository.findByNomAndPrenom(personne.getNom(), personne.getPrenom());
 		if (personnes.size() > 0) {
+			request.setAttribute("connected", true, WebRequest.SCOPE_SESSION);
 			return "redirect:personne";
 		}
-		return "connectForm";
+		return "jsp/connectForm";
 	}
 
-	@GetMapping(value = "/deconnect")
-	public String leave(@ModelAttribute Personne perso, WebRequest request) {
+	@GetMapping("/deconnect")
+	public String leave(WebRequest request) {
+		request.setAttribute("connected", false, WebRequest.SCOPE_SESSION);
 		request.removeAttribute("perso", WebRequest.SCOPE_SESSION);
 		return "redirect:connect";
 	}
